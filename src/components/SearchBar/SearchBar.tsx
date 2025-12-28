@@ -5,7 +5,7 @@ interface SearchBarProps {
   onSubmit: (search: string) => Promise<void>;
 }
 function SearchBar({ onSubmit }: SearchBarProps) {
-  const handleSumbit = (formdata: FormData) => {
+  const handleSubmit = (formdata: FormData) => {
     const search = formdata.get('query') as string;
 
     if (search === '') {
@@ -26,7 +26,7 @@ function SearchBar({ onSubmit }: SearchBarProps) {
         >
           Powered by TMDB
         </a>
-        <form action={handleSumbit} className={styles.form}>
+        <form action={handleSubmit} className={styles.form}>
           <input
             className={styles.input}
             type="text"

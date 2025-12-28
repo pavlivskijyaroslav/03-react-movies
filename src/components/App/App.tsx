@@ -3,7 +3,7 @@ import { useState } from 'react';
 import SearchBar from '../SearchBar/SearchBar';
 import fetchMovies from '../../services/movieService';
 import MovieGrid from '../MovieGrid/MovieGrid';
-import Loader from '../Loader.module/Loader';
+import Loader from '../Loader/Loader';
 import ErrorMessage from '../ErrorMessage/ErrorMessage';
 import MovieModal from '../MovieModal/MovieModal';
 import type { Movie } from '../../types/movie';
@@ -11,7 +11,6 @@ import type { Movie } from '../../types/movie';
 function App() {
   const [isLoader, setIsLodaer] = useState<boolean>(false);
   const [isError, setIsError] = useState<string | null>(null);
-  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [selectedMovie, setSelectedMovie] = useState<Movie | null>(null);
   const [movies, setMovies] = useState<Movie[]>([]);
   const handleSearch = async (query: string) => {
@@ -35,11 +34,10 @@ function App() {
 
   const openModal = (movie: Movie) => {
     setSelectedMovie(movie);
-    setIsModalOpen(true);
   };
 
   const closeModal = () => {
-    setIsModalOpen(false);
+    setSelectedMovie(null);
   };
   return (
     <>
@@ -48,7 +46,7 @@ function App() {
       <Toaster position="top-center" reverseOrder={false} />
       {isLoader ? <Loader /> : null}
       {isError ? <ErrorMessage /> : null}
-      {isModalOpen && selectedMovie && (
+      {selectedMovie && (
         <MovieModal movie={selectedMovie} onClose={closeModal} />
       )}
     </>
